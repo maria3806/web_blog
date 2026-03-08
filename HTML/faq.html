@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lemoniq | FAQ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #000; color: #fff; overflow: hidden; height: 100vh; }
+        .video-bg { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5; }
+        #rainCanvas { position: fixed; inset: 0; z-index: -4; pointer-events: none; }
+        .outer-blur { position: fixed; inset: 0; backdrop-filter: blur(8px) brightness(0.6); z-index: -1; }
+
+        .site-frame {
+            position: relative;
+            width: calc(100vw - 80px);
+            height: calc(100vh - 80px);
+            margin: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 40px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .top-nav {
+            height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 45px;
+            background: rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .logo-brand {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-item {
+            margin-left: 25px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            opacity: 1;
+        }
+
+        .scroll-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .scroll-wrapper::-webkit-scrollbar { width: 4px; }
+        .scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+
+        .main-container {
+            width: 100%;
+            max-width: 700px;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 26px;
+            backdrop-filter: blur(5px);
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 200;
+            letter-spacing: -2px;
+            text-transform: lowercase;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-question {
+            padding: 15px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-bottom: 15px;
+        }
+
+        .fade-in { animation: fadeIn 1s ease forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <video class="video-bg" autoplay muted loop playsinline>
+        <source src="/images/bg2.mp4" type="video/mp4">
+    </video>
+    <canvas id="rainCanvas"></canvas>
+    <div class="outer-blur"></div>
+
+    <div class="site-frame">
+        <nav class="top-nav">
+            <a href="/" class="logo-brand">lemoniq</a>
+            <div class="nav-links">
+                <a href="/faq" class="nav-item active">FAQ</a>
+                <a href="/" class="nav-item">Home</a>
+                <a href="/articles" class="nav-item">Articles</a>
+                <a href="/account" class="nav-item">Account</a>
+                <a href="/about" class="nav-item">About Us</a>
+            </div>
+        </nav>
+
+        <div class="scroll-wrapper">
+            <div class="main-container fade-in">
+                <h1>f.a.q.</h1>
+
+                <div class="glass-box">
+                    <div class="faq-item">
+                        <div class="faq-question">What is lemoniq? <span>+</span></div>
+                        <div class="faq-answer">It's a creative platform for publishing unique stories under a lemon rain. We value deep meanings and minimalistic design.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">How to become an author? <span>+</span></div>
+                        <div class="faq-answer">Register through the main page and navigate to your dashboard. After logging in, you'll find a button to create new articles.</div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Why "lemoniq"? <span>+</span></div>
+                        <div class="faq-answer">The name "lemoniq" combines "lemon" with "unique," reflecting our commitment to creating distinctive and refreshing content under the lemon rain.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is it a final form of the site?<span>+</span></div>
+                        <div class="faq-answer">No, it's still in development. In future, I want to add tags and filters to improve the user experience.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const parent = q.parentElement;
+                parent.classList.toggle('active');
+                q.querySelector('span').innerText = parent.classList.contains('active') ? '−' : '+';
+            });
+        });
+
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * width * 1.5 - (width * 0.5),
+                    y: Math.random() * height,
+                    l: Math.random() * 15 + 5,
+                    v: Math.random() * 12 + 8,
+                    a: 0.2
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p.x + p.l * Math.sin(p.a), p.y + p.l * Math.cos(p.a));
+                ctx.stroke();
+
+                p.x += p.v * Math.sin(p.a);
+                p.y += p.v * Math.cos(p.a);
+
+                if (p.y > height) {
+                    p.y = -20;
+                    p.x = Math.random() * width * 1.5 - (width * 0.5);
+                }
+            });
+
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        draw();
+    </script>
+</body>
+</html>

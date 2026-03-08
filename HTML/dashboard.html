@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lemoniq | Admin Panel</title>
+    <link rel="stylesheet" href="/css/dashboard.style.css">
+</head>
+<body>
+
+<video class="video-bg" autoplay muted loop playsinline>
+    <source src="/images/bg2.mp4" type="video/mp4">
+</video>
+<canvas id="rainCanvas"></canvas>
+<div class="outer-blur"></div>
+
+<div class="site-frame">
+    <nav class="top-nav">
+        <a href="/" class="logo-brand">lemoniq</a>
+        <div class="nav-links">
+            <a href="/faq" class="nav-item">FAQ</a>
+            <a href="/" class="nav-item">Home</a>
+            <a href="/articles" class="nav-item">Articles</a>
+            <a href="/about" class="nav-item">About Us</a>
+            <a href="/dashboard-access" class="nav-item active">Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="scroll-wrapper">
+        <div class="main-container">
+            <div class="glass-box dash-header">
+                <h1>admin panel</h1>
+                <a href="/new" class="btn btn-edit" style="background: #fff; color: #000;">+ New Story</a>
+            </div>
+
+            <div id="articlesList" style="display: flex; flex-direction: column; gap: 15px;">
+                {{range .}}
+                <div class="glass-box article-card">
+                    <div class="article-info">
+                        <h3>{{.Title}}</h3>
+                        <p>{{.Author}} | {{.Published}}</p>
+                    </div>
+                    <div class="card-actions">
+                        <a href="/edit?id={{.ID}}" class="btn btn-edit">Edit</a>
+
+                        <form action="/delete?id={{.ID}}" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this story permanently?');">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('rainCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+
+    function init() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * width * 1.5 - (width * 0.5),
+                y: Math.random() * height,
+                l: Math.random() * 15 + 5,
+                v: Math.random() * 12 + 8,
+                a: 0.2
+            });
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p.x + p.l * Math.sin(p.a), p.y + p.l * Math.cos(p.a));
+            ctx.stroke();
+
+            p.x += p.v * Math.sin(p.a);
+            p.y += p.v * Math.cos(p.a);
+
+            if (p.y > height) {
+                p.y = -20;
+                p.x = Math.random() * width * 1.5 - (width * 0.5);
+            }
+        });
+
+        requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    draw();
+</script>
+
+</body>
+</html>

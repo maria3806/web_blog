@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lemoniq | About Us</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #000; color: #fff; overflow: hidden; height: 100vh; }
+
+        .video-bg { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -5; }
+        #rainCanvas { position: fixed; inset: 0; z-index: -4; pointer-events: none; }
+        .outer-blur { position: fixed; inset: 0; backdrop-filter: blur(8px) brightness(0.6); z-index: -1; }
+
+        .site-frame {
+            position: relative;
+            width: calc(100vw - 80px);
+            height: calc(100vh - 80px);
+            margin: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 40px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .top-nav {
+            height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 45px;
+            background: rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .logo-brand {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-item {
+            margin-left: 25px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            opacity: 1;
+        }
+
+        .scroll-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .scroll-wrapper::-webkit-scrollbar { width: 4px; }
+        .scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+
+        .main-container {
+            width: 100%;
+            max-width: 750px;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 26px;
+            backdrop-filter: blur(5px);
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 54px;
+            font-weight: 200;
+            letter-spacing: -3px;
+            text-transform: lowercase;
+            line-height: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 30px;
+        }
+
+        .content-text {
+            line-height: 1.8;
+            font-weight: 300;
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+        }
+
+        .content-text b { color: #fff; font-weight: 600; }
+
+        .mission-row {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .mission-card {
+            flex: 1;
+            padding: 25px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .mission-card span {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .mission-card h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .mission-card p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .fade-in { animation: fadeIn 1.2s ease forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <video class="video-bg" autoplay muted loop playsinline>
+        <source src="/images/bg2.mp4" type="video/mp4">
+    </video>
+    <canvas id="rainCanvas"></canvas>
+    <div class="outer-blur"></div>
+
+    <div class="site-frame">
+        <nav class="top-nav">
+            <a href="/" class="logo-brand">lemoniq</a>
+            <div class="nav-links">
+                <a href="/" class="nav-item">Home</a>
+                <a href="/faq" class="nav-item">FAQ</a>
+                <a href="/articles" class="nav-item">Articles</a>
+                <a href="/account" class="nav-item">Account</a>
+                <a href="/about" class="nav-item active">About Us</a>
+            </div>
+        </nav>
+
+        <div class="scroll-wrapper">
+            <div class="main-container fade-in">
+                <div class="glass-box">
+                    <h1>about lemoniq</h1>
+                    <p class="tagline">behind the yellow curtains.</p>
+
+                    <div class="content-text">
+                        <p>Welcome to <b>lemoniq</b>, a digital sanctuary designed for those who find inspiration in the quiet moments of creative chaos. We believe that every story deserves a beautiful space to breathe, free from the noise of the modern web.</p>
+                        <br>
+                        <p>Our platform was born from a simple idea: <i>the lemon rain</i>. Just like a citrus storm, our community brings a sharp, refreshing perspective to art, technology, and philosophy. We are a collective of writers, dreamers, and minimalists dedicated to deep meanings and aesthetic clarity.</p>
+                    </div>
+
+                    <div class="mission-row">
+                        <div class="mission-card">
+                            <span>✦</span>
+                            <h4>Creativity</h4>
+                            <p>Unrestricted flow of unique ideas.</p>
+                        </div>
+                        <div class="mission-card">
+                            <span>✧</span>
+                            <h4>Aesthetics</h4>
+                            <p>Minimalism as a way of thinking.</p>
+                        </div>
+                        <div class="mission-card">
+                            <span>⚛</span>
+                            <h4>Community</h4>
+                            <p>A home for every creative soul.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * width * 1.5 - (width * 0.5),
+                    y: Math.random() * height,
+                    l: Math.random() * 15 + 5,
+                    v: Math.random() * 12 + 8,
+                    a: 0.2
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p.x + p.l * Math.sin(p.a), p.y + p.l * Math.cos(p.a));
+                ctx.stroke();
+
+                p.x += p.v * Math.sin(p.a);
+                p.y += p.v * Math.cos(p.a);
+
+                if (p.y > height) {
+                    p.y = -20;
+                    p.x = Math.random() * width * 1.5 - (width * 0.5);
+                }
+            });
+
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        draw();
+    </script>
+</body>
+</html>

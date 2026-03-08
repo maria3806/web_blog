@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | lemoniq</title>
+    <link rel="stylesheet" href="/css/account.style.css">
+</head>
+<body>
+
+<video class="video-bg" autoplay muted loop playsinline>
+    <source src="/images/bg2.mp4" type="video/mp4">
+</video>
+<canvas id="rainCanvas"></canvas>
+<div class="outer-blur"></div>
+
+<div class="site-frame">
+    <nav class="top-nav">
+        <a href="/" class="logo-brand">lemoniq</a>
+        <div class="nav-links">
+            <a href="/faq" class="nav-item">FAQ</a>
+            <a href="/articles" class="nav-item">Articles</a>
+            <a href="/account" class="nav-item active">My Account</a>
+            <a href="/about" class="nav-item">About Us</a>
+            <a href="/dashboard-access" class="nav-item">Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="account-container fade-in">
+        <aside class="profile-sidebar">
+            <div class="avatar-circle" id="emojiAvatar"></div>
+            <h2 class="username">{{.Username}}</h2>
+            <p class="user-status">
+                {{if eq .Role "admin"}}Administrator session{{else}}Writing under the rain{{end}}
+            </p>
+
+            <form action="/logout" method="POST">
+                <button class="logout-btn" type="submit">Log Out</button>
+            </form>
+        </aside>
+
+        <section class="account-details">
+            <div class="glass-card settings-item">
+                <span class="label">Email Address</span>
+                <p class="value">{{.Email}}</p>
+            </div>
+
+            <div class="glass-card settings-item">
+                <span class="label">Account Password</span>
+                <p class="value">{{.PasswordMask}}</p>
+            </div>
+
+            <div class="glass-card settings-item">
+                <span class="label">Registered Since</span>
+                <p class="value">{{.RegisteredAt}}</p>
+            </div>
+
+            <div class="glass-card settings-item">
+                <span class="label">Role</span>
+                <p class="value">{{.Role}}</p>
+            </div>
+
+            <div class="glass-box stats-row">
+                <div class="stat">
+                    <span class="stat-num">{{.PostCount}}</span>
+                    <span class="stat-text">Total Posts</span>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    const canvas = document.getElementById('rainCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+
+    function init() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * width * 1.5 - (width * 0.5),
+                y: Math.random() * height,
+                l: Math.random() * 15 + 5,
+                v: Math.random() * 12 + 8,
+                a: 0.2
+            });
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p.x + p.l * Math.sin(p.a), p.y + p.l * Math.cos(p.a));
+            ctx.stroke();
+
+            p.x += p.v * Math.sin(p.a);
+            p.y += p.v * Math.cos(p.a);
+
+            if (p.y > height) {
+                p.y = -20;
+                p.x = Math.random() * width * 1.5 - (width * 0.5);
+            }
+        });
+
+        requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    draw();
+
+    const emojis = ['🍋', '🌊', '☁️', '🧊', '⚡️', '🪐', '🕯️', '💎', '🖤', '👻', '🌑', '👽', '🦋', '✨', '🌪️', '🍃'];
+    document.getElementById('emojiAvatar').innerText = emojis[Math.floor(Math.random() * emojis.length)];
+</script>
+
+</body>
+</html>

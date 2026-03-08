@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citrus Thoughts for Quiet Days | lemoniq</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+        body{background:#000;color:#fff;overflow:hidden;height:100vh}
+        .video-bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-5}
+        .outer-blur{position:fixed;inset:0;backdrop-filter:blur(8px) brightness(.6);z-index:-1}
+        .site-frame{position:relative;width:calc(100vw - 80px);height:calc(100vh - 80px);margin:40px;background:rgba(0,0,0,.3);border-radius:40px;overflow:auto;border:1px solid rgba(255,255,255,.15)}
+        .top-nav{height:75px;display:flex;justify-content:space-between;align-items:center;padding:0 45px;background:rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.1)}
+        .logo-brand,.nav-item{color:#fff;text-decoration:none}
+        .logo-brand{font-size:24px;font-weight:800}
+        .nav-item{margin-left:25px;font-size:11px;text-transform:uppercase;opacity:.6}
+        .wrap{max-width:860px;margin:0 auto;padding:48px 40px 70px}
+        .card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:36px;backdrop-filter:blur(8px)}
+        .hero{width:100%;height:320px;object-fit:cover;border-radius:22px;margin:18px 0 24px}
+        .meta{opacity:.65;font-size:13px;margin-top:12px}
+        .tags{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+        .tag{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.08);font-size:12px}
+        p{line-height:1.8;color:rgba(255,255,255,.82);margin:12px 0}
+    </style>
+</head>
+<body>
+<video class="video-bg" autoplay muted loop playsinline>
+    <source src="/images/bg2.mp4" type="video/mp4">
+</video>
+<div class="outer-blur"></div>
+
+<div class="site-frame">
+    <nav class="top-nav">
+        <a href="/" class="logo-brand">lemoniq</a>
+        <div>
+            <a href="/articles" class="nav-item">Articles</a>
+            <a href="/account" class="nav-item">My Account</a>
+        </div>
+    </nav>
+
+    <div class="wrap">
+        <div class="card">
+            <h1>Citrus Thoughts for Quiet Days</h1>
+            <div class="meta">by Elias Bloom · 2026-03-07 · ❤️ 34</div>
+            <img class="hero" src="/images/header3.png" alt="Citrus Thoughts">
+            <div class="tags">
+                <span class="tag">#life</span>
+                <span class="tag">#design</span>
+                <span class="tag">#thoughts</span>
+            </div>
+            <p>Some days are not dramatic. They are simply quiet, pale, and a little unfinished. Those days need small rituals.</p>
+            <p>A glass of water. A soft playlist. A page half-written. A yellow object on the table that reminds you brightness can be subtle.</p>
+            <p>This story is for that mood — not sadness, not joy, just the clean middle where thinking becomes gentle.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

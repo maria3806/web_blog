@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lemoniq | Update Article</title>
+    <link rel="stylesheet" href="/css/update.article.style.css">
+</head>
+<body>
+
+<video class="video-bg" autoplay muted loop playsinline>
+    <source src="/images/bg2.mp4" type="video/mp4">
+</video>
+<canvas id="rainCanvas"></canvas>
+<div class="outer-blur"></div>
+
+<div class="site-frame">
+    <nav class="top-nav">
+        <a href="/" class="logo-brand">lemoniq</a>
+        <div class="nav-links">
+            <a href="/faq" class="nav-item">FAQ</a>
+            <a href="/articles" class="nav-item">Articles</a>
+            <a href="/account" class="nav-item">My Account</a>
+            <a href="/about" class="nav-item">About Us</a>
+            <a href="/dashboard-access" class="nav-item">Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="scroll-wrapper">
+        <div class="main-container fade-in">
+            <div class="glass-box title-box">
+                <h1>update article</h1>
+            </div>
+
+            <div class="glass-box">
+                <form action="/edit?id={{.ID}}" method="POST" class="article-form">
+                    <div>
+                        <span class="form-label">Article Title</span>
+                        <input class="auth-input" type="text" name="title" value="{{.Title}}" required>
+                    </div>
+
+                    <div>
+                        <span class="form-label">Publishing Date</span>
+                        <input class="auth-input" type="date" name="date" value="{{.Published}}" required>
+                    </div>
+
+                    <div>
+                        <span class="form-label">Content</span>
+                        <textarea class="auth-input" name="content" required>{{.Content}}</textarea>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="accept-btn">Save changes</button>
+                    </div>
+                </form>
+
+                <form action="/delete?id={{.ID}}" method="POST" style="margin-top: 15px;">
+                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this lemon story? This cannot be undone.');">
+                        Delete article
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('rainCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+
+    function init() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * width * 1.5 - (width * 0.5),
+                y: Math.random() * height,
+                l: Math.random() * 15 + 5,
+                v: Math.random() * 12 + 8,
+                a: 0.2
+            });
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p.x + p.l * Math.sin(p.a), p.y + p.l * Math.cos(p.a));
+            ctx.stroke();
+
+            p.x += p.v * Math.sin(p.a);
+            p.y += p.v * Math.cos(p.a);
+
+            if (p.y > height) {
+                p.y = -20;
+                p.x = Math.random() * width * 1.5 - (width * 0.5);
+            }
+        });
+
+        requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    draw();
+</script>
+
+</body>
+</html>
