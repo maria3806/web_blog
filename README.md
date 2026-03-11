@@ -4,131 +4,137 @@
 > After registration the verification link will appear in the server console.
 > Copy and open it in your browser to activate the account.
 
-# Articles JSON API (Go)
+# lemoniq 🍋 
+## Web-Blog service uses **Go** for the backend, **HTML** for page structure, **CSS** for styling, **JavaScript** for client-side animation, and **JSON** for local data storage. :shipit:
 
-This project is a simple JSON REST API written in Go, which allows you to create, read, update, and delete articles.
-All articles are stored as separate .json files on the local filesystem. :woman_technologist:
-#### The project was created as a learning / educational task to demonstrate working with: 
+#### *Lemoniq** is a creative blog-style web application built with **Go**, combining server-rendered pages, JWT-based authentication, email verification, article publishing, an admin dashboard, and a visually atmospheric interface with glassmorphism elements, video background, and animated rain effects.
 
-* Go web servers
+#### It is a compact full-stack project that demonstrates how to build a content platform without an external database, using local JSON storage, modular handlers, middleware, and template-based rendering. At the same time, Lemoniq is more than just a technical exercise — it feels like a small digital space with its own mood, where backend structure and visual style work together instead of existing separately.
 
-* JSON serialization and deserialization
+#### This project works especially well as a learning project, a portfolio piece, or a practical example of backend and full-stack development in Go. It brings together routing, authentication, role-based access control, CRUD logic, local persistence, and server-rendered UI in one structured application.
 
-* HTTP methods (CRUD)
+<img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/bc50c3fc-9d64-4f5f-8721-da627b0a7ba8" />
 
-* File system operations
+---
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://go.dev/images/gophers/ladder.svg)
+## Overview
 
-# Features
+Lemoniq is designed as a lightweight publishing platform where visitors can explore public content, register as users, verify their email, log in, access a personal account page, and create new articles. Administrators use a separate access flow to enter a protected dashboard where they can manage content, edit articles, and delete them when needed.
 
-* Start a web server on port 8080
+The application keeps its architecture intentionally simple and transparent:
 
-* Automatically creates sample data on first run
+- **Go** handles the backend and routing
+- **HTML templates + CSS** render the frontend
+- **JWT tokens in HttpOnly cookies** handle authentication
+- **JSON files** store articles and user accounts
+- **Environment variables** control secrets and admin credentials
 
-<sub> and also </sub>
-### CRUD operations for articles:
+One of the practical advantages of Lemoniq is that it does not require any database setup. The system automatically creates the required storage directories on startup and seeds a few base articles on the first launch, so the application already feels alive from the beginning rather than looking empty and unfinished.
 
-* Create article
+---
 
-* Get all articles
+## Features
 
-* Get article by ID
+Lemoniq includes the core features expected from a small content platform while keeping the codebase readable and approachable.
 
-* Update article
+- User registration
+- Login and logout
+- Email verification flow
+- JWT authentication with cookies
+- Protected account page
+- Public article feed
+- Article creation for authenticated users
+- Separate admin login flow
+- Admin dashboard for content management
+- Article editing and deletion by admin
+- JSON-based local storage
+- FAQ and About pages
+- Animated landing page with video background
+- Glassmorphism-inspired UI styling
 
-* Delete article
+Because the app uses file-based JSON storage instead of a database, it is easy to run locally and understand end-to-end without additional infrastructure. That makes it especially convenient for studying the full request flow and seeing how all the parts of the application connect together in a clear way.
 
-* Data stored in the articles/ folder as JSON files
+---
 
-# Article Structure
+## Tech Stack
 
-### Each article has the following structure:
+- **Backend:** Go, `net/http`
+- **Frontend:** HTML, CSS, Go templates
+- **Authentication:** JWT + HttpOnly cookies
+- **Storage:** Local JSON files
+- **Configuration:** `.env` with `godotenv`
+- **Architecture:** Modular handlers, middleware, and models
+
+
+<img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/d4d1c92f-f517-48fd-8c37-f3fa398af873" />
+
+---
+
+## Project Architecture
+
+The project is organized into a small and readable structure:
+
+- `main.go` loads environment variables, ensures storage exists, registers routes, and starts the server
+- `handlers/` contains route handlers and the main application logic
+- `handlers/middleware/` contains JWT validation and route protection
+- `model/` defines the core entities used by the application
+- `HTML/` stores server-rendered templates
+- `images/` stores static visual assets
+- `articles/` stores article JSON files
+- `users/` stores user JSON files
+
+This structure keeps the project clear and easy to navigate, which is especially useful for learning, maintenance, and portfolio presentation. Even though the application is relatively compact, it already follows a modular approach that makes the logic feel organized rather than chaotic.
+
+---
+
+## Project Structure
+
+```bash
+.
+├── main.go
+├── handlers/
+│   ├── account_handlers.go
+│   ├── article_handlers.go
+│   ├── auth.go
+│   ├── email.go
+│   ├── pages_handlers.go
+│   ├── router.go
+│   ├── storage.go
+│   └── middleware/
+│       └── jwt_middleware.go
+├── model/
+│   ├── article.go
+│   └── user.go
+├── HTML/
+├── images/
+├── articles/
+├── users/
+└── .env
 ```
-{
-  "id": 1,
-  "title": "First article",
-  "content": "Hello world",
-  "date": "2025-01-01"
-}
-```
-# API Endpoints
+## How It Works?
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://go.dev/images/gophers/megaphone-gopher.svg)
+#### When the application starts, it first loads environment variables from the _.env_ file. After that, it initializes storage by creating the _articles_ and _users_ directories if they do not already exist. During the same step, the application also adds several starter articles so that the platform already contains visible content on first launch.
 
-### Get all articles
-```
-GET /articles
-```
+#### Once initialization is complete, the application registers all routes and starts the HTTP server on localhost:8080.
 
-### Get article by ID
-```
-GET /articles?id=1
-```
+#### From that point, visitors can browse public pages, register an account, verify their email using the link printed in the server console, and log in. After authentication, users can access their personal account page and create new articles. Administrators follow a separate login flow and can open the dashboard, where they are able to edit or delete published content.
 
-### Create a new article
-```
-POST /articles
-```
+#### The overall flow is straightforward, but that is part of the project’s strength: it shows the full cycle of a small web platform without hiding the important logic behind unnecessary complexity.
 
+## Authentication and Access
 
-### Request body example:
-```
-{
-  "title": "New article",
-  "content": "Some text",
-  "date": "2025-02-01"
-}
-```
+#### Lemoniq uses JWT-based authentication stored in an HttpOnly cookie named auth_token. When a user logs in successfully, a token is generated and attached to the browser as a cookie. Protected routes are then checked through middleware, which validates the token and adds user data to the request context.
 
-### Update an article
-```
-PUT /articles/{id}
-```
+### The application separates access into different roles:
 
+> Guests can browse public content and register
 
-### Request body example:
-```
-{
-  "title": "Updated title",
-  "content": "Updated content",
-  "date": "2025-02-02"
-}
-```
-### Delete an article
-```
-DELETE /articles/{id}
-```
+> Authenticated users can access their account page and publish articles
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://go.dev/images/gophers/skateboarding.svg)
-# How to Run 
+> Administrators have a separate protected area with dashboard access and content management privileges
 
--  Make sure Go is installed
+#### Email verification is part of the user registration flow. After registration, the application generates a verification token and prints a confirmation link in the server console. The user must open this link before they are able to log in successfully.
 
--  Clone the repository
-
--  Run the project:
-```
-go run main.go
-```
-
-## Server will start on:
-> http://localhost:8080
-
-# Technologies Used
-
-> Go (Golang)
-
-> net/http
-
-> encoding/json
-
-> File system storage
-
-# Notes / Planned Features
-
-_I plan to add additional features to make the API more convenient and closer to a real-world application. First, I want to implement search and filtering, pagination, and sorting for easier browsing of articles. I also plan to add an author field and allow filtering by author._
-
-_In the future, it will be possible to implement database storage instead of JSON files, authentication for creating and editing articles, support for attachments (files, images), and interactive API documentation. These enhancements will make the project more functional and scalable while keeping it educational._
+#### This role-based structure makes the application feel more realistic and adds an important layer of logic beyond a basic single-user demo.
 
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://camo.githubusercontent.com/13fff3442af824724acc42cefddf5c88a1675931fb089d5ff0bcdc95fc27c1ea/68747470733a2f2f73332e65752d63656e7472616c2d312e616d617a6f6e6177732e636f6d2f656e74676f2e696f2f6173736574732f676f706865725f67726170682e706e67)
