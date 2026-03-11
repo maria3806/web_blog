@@ -275,4 +275,3 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	middleware.ClearAuthCookie(w)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
-!
