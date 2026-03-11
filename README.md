@@ -1,9 +1,8 @@
-## Email verification is simulated in development mode.
-
-#### After registration the verification link will appear in the server console.
-#### Copy and open it in your browser to activate the account.
-
-
+> [!CAUTION]
+> **Email verification is simulated in _development mode._**
+> 
+> After registration the verification link will appear in the server console.
+> Copy and open it in your browser to activate the account.
 
 # Articles JSON API (Go)
 
