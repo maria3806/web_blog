@@ -34,7 +34,11 @@
         </div>
 
         <div class="glass-box description-box">
+            {{if .IsLoggedIn}}
+            <p>Welcome back to lemoniq. Continue your journey, open your account, or explore new articles from the community.</p>
+            {{else}}
             <p>Welcome to our creative universe. Create an account to join the community or log in to continue your journey through the deepest articles.</p>
+            {{end}}
 
             {{if .Error}}
             <div style="margin-top: 15px; padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); font-size: 13px;">
@@ -47,6 +51,7 @@
             {{end}}
         </div>
 
+        {{if not .IsLoggedIn}}
         <div class="auth-row">
             <div class="glass-box auth-card">
                 <div class="auth-head">Sign Up</div>
@@ -67,6 +72,17 @@
                 </form>
             </div>
         </div>
+        {{else}}
+        <div class="auth-row">
+            <a href="/account" class="glass-box auth-card logged-card">
+                <div class="auth-head">My Account</div>
+            </a>
+
+            <a href="/articles" class="glass-box auth-card logged-card">
+                <div class="auth-head">Read Articles</div>
+            </a>
+        </div>
+        {{end}}
     </div>
 </div>
 

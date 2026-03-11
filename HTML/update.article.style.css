@@ -43,8 +43,8 @@
         }
 
         .scroll-wrapper::-webkit-scrollbar { width: 4px; }
-        .scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-
+        .scroll-wrapper::-webkit-scrollbar-thumb { background: whitesmoke; border-radius: 10px; }
+        
         .main-container {
             width: 100%;
             max-width: 600px;

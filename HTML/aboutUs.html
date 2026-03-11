@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lemoniq | About Us</title>
-    <style>
+</head>
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: #000; color: #fff; overflow: hidden; height: 100vh; }
 
@@ -70,7 +71,7 @@
         }
 
         .scroll-wrapper::-webkit-scrollbar { width: 4px; }
-        .scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .scroll-wrapper::-webkit-scrollbar-thumb { background: whitesmoke; border-radius: 10px; }
 
         .main-container {
             width: 100%;
@@ -155,10 +156,10 @@
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
-</head>
 <body>
     <video class="video-bg" autoplay muted loop playsinline>
         <source src="/images/bg2.mp4" type="video/mp4">
+            
     </video>
     <canvas id="rainCanvas"></canvas>
     <div class="outer-blur"></div>
@@ -167,12 +168,12 @@
         <nav class="top-nav">
             <a href="/" class="logo-brand">lemoniq</a>
             <div class="nav-links">
-                <a href="/" class="nav-item">Home</a>
-                <a href="/faq" class="nav-item">FAQ</a>
-                <a href="/articles" class="nav-item">Articles</a>
-                <a href="/account" class="nav-item">Account</a>
-                <a href="/about" class="nav-item active">About Us</a>
-            </div>
+            <a href="/faq" class="nav-item">FAQ</a>
+            <a href="/articles" class="nav-item">Articles</a>
+            <a href="/account" class="nav-item">My Account</a>
+            <a href="/about" class="nav-item">About Us</a>
+            <a href="/dashboard-access" class="nav-item">Dashboard</a>
+        </div>
         </nav>
 
         <div class="scroll-wrapper">

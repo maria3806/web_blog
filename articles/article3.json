@@ -1,7 +1,8 @@
 {
   "id": 3,
-  "title": "how are you doing?",
-  "content": "my second articlee",
+  "title": "...",
+  "content": "okay i will use post method",
   "published": "2026-03-07",
-  "author": "system"
+  "author": "system",
+  "image": "/images/header3.png"
 }

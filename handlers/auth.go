@@ -33,6 +33,32 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	isLoggedIn := false
+
+	cookie, err := r.Cookie("auth_token")
+	if err == nil && cookie.Value != "" {
+		if _, err := middleware.RequireAuth(func(w http.ResponseWriter, r *http.Request) {}), error(nil); err == nil {
+		}
+	}
+
+	if cookie, err := r.Cookie("auth_token"); err == nil && cookie.Value != "" {
+		req, _ := http.NewRequest(http.MethodGet, "/", nil)
+		req.AddCookie(cookie)
+
+		rr := dummyResponseWriter{}
+		called := false
+
+		handler := middleware.RequireAuth(func(w http.ResponseWriter, r *http.Request) {
+			called = true
+		})
+
+		handler(rr, req)
+
+		if called {
+			isLoggedIn = true
+		}
+	}
+
 	tmpl, err := parseTemplate("home.html")
 	if err != nil {
 		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
@@ -40,15 +66,29 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := struct {
-		Error string
+		Error      string
+		IsLoggedIn bool
 	}{
-		Error: r.URL.Query().Get("error"),
+		Error:      r.URL.Query().Get("error"),
+		IsLoggedIn: isLoggedIn,
 	}
 
 	if err := tmpl.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
+
+type dummyResponseWriter struct{}
+
+func (dummyResponseWriter) Header() http.Header {
+	return http.Header{}
+}
+
+func (dummyResponseWriter) Write(b []byte) (int, error) {
+	return len(b), nil
+}
+
+func (dummyResponseWriter) WriteHeader(statusCode int) {}
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
