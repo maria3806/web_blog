@@ -7,4 +7,7 @@ type User struct {
 	RegisteredAt string `json:"registered_at"`
 	PostCount    int    `json:"post_count"`
 	Role         string `json:"role"`
+
+	EmailVerified bool   `json:"email_verified"`
+	VerifyToken   string `json:"verify_token"`
 }

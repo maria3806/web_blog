@@ -95,6 +95,7 @@ func getArticlesList() []model.Article {
 	}
 
 	var articles []model.Article
+
 	for _, f := range files {
 		if f.IsDir() || !strings.HasSuffix(f.Name(), ".json") {
 			continue
@@ -109,6 +110,7 @@ func getArticlesList() []model.Article {
 		if err := json.Unmarshal(data, &a); err != nil {
 			continue
 		}
+
 		articles = append(articles, a)
 	}
 
@@ -140,11 +142,13 @@ func deleteArticleByID(id int) error {
 func nextArticleID() int {
 	articles := getArticlesList()
 	maxID := 0
+
 	for _, a := range articles {
 		if a.ID > maxID {
 			maxID = a.ID
 		}
 	}
+
 	return maxID + 1
 }
 
@@ -178,7 +182,37 @@ func getUserByUsername(username string) (*model.User, error) {
 	if err := json.Unmarshal(data, &user); err != nil {
 		return nil, err
 	}
+
 	return &user, nil
+}
+
+func getUserByVerifyToken(token string) (*model.User, error) {
+	files, err := os.ReadDir(usersDir)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, f := range files {
+		if f.IsDir() || !strings.HasSuffix(f.Name(), ".json") {
+			continue
+		}
+
+		data, err := os.ReadFile(filepath.Join(usersDir, f.Name()))
+		if err != nil {
+			continue
+		}
+
+		var user model.User
+		if err := json.Unmarshal(data, &user); err != nil {
+			continue
+		}
+
+		if strings.TrimSpace(user.VerifyToken) == strings.TrimSpace(token) && token != "" {
+			return &user, nil
+		}
+	}
+
+	return nil, os.ErrNotExist
 }
 
 func userExistsByUsername(username string) bool {

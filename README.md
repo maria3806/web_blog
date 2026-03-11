@@ -1,3 +1,10 @@
+## Email verification is simulated in development mode.
+
+#### After registration the verification link will appear in the server console.
+#### Copy and open it in your browser to activate the account.
+
+
+
 # Articles JSON API (Go)
 
 This project is a simple JSON REST API written in Go, which allows you to create, read, update, and delete articles.

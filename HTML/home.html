@@ -47,6 +47,15 @@
                 {{if eq .Error "email_exists"}}This email is already registered.{{end}}
                 {{if eq .Error "user_not_found"}}User not found.{{end}}
                 {{if eq .Error "wrong_password"}}Wrong password.{{end}}
+                {{if eq .Error "email_not_verified"}}Please confirm your account first. Check server console for verification link.{{end}}
+                {{if eq .Error "invalid_verification_token"}}Invalid or expired verification link.{{end}}
+            </div>
+            {{end}}
+
+            {{if .Success}}
+            <div style="margin-top: 15px; padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); font-size: 13px;">
+                {{if eq .Success "check_console"}}Check server console for verification link.{{end}}
+                {{if eq .Success "email_verified"}}Email verified successfully. You can now log in.{{end}}
             </div>
             {{end}}
         </div>

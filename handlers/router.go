@@ -16,6 +16,7 @@ func RegisterRoutes() {
 	http.HandleFunc("/user-login", UserLoginHandler)
 	http.HandleFunc("/admin-login", AdminLoginHandler)
 	http.HandleFunc("/logout", LogoutHandler)
+	http.HandleFunc("/verify", VerifyEmailHandler)
 
 	http.HandleFunc("/dashboard-access", DashboardAccessHandler)
 	http.HandleFunc("/dashboard", DashboardWithAdminAuth())

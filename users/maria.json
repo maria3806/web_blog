@@ -1,0 +1,10 @@
+{
+  "username": "maria",
+  "email": "maria.doronina.13.11@gmail.com",
+  "password_hash": "93aae5c810b81368f4386c9dc2a9f559be61a2563bbf375496f6d94d2afc702a",
+  "registered_at": "2026-03-11 05:00",
+  "post_count": 0,
+  "role": "user",
+  "email_verified": false,
+  "verify_token": "5f30219d145d69e643cea20e384ae5d404f2edb22ddafafabab66501a1d5ef4c"
+}
