@@ -13,16 +13,27 @@ import (
 	"blog/model"
 )
 
-const (
-	articlesDir = "articles"
-	usersDir    = "users"
-)
+func getArticlesDir() string {
+	dir := os.Getenv("ARTICLES_DIR")
+	if dir == "" {
+		dir = "articles"
+	}
+	return dir
+}
+
+func getUsersDir() string {
+	dir := os.Getenv("USERS_DIR")
+	if dir == "" {
+		dir = "users"
+	}
+	return dir
+}
 
 func EnsureStorage() error {
-	if err := os.MkdirAll(articlesDir, 0755); err != nil {
+	if err := os.MkdirAll(getArticlesDir(), 0755); err != nil {
 		return err
 	}
-	if err := os.MkdirAll(usersDir, 0755); err != nil {
+	if err := os.MkdirAll(getUsersDir(), 0755); err != nil {
 		return err
 	}
 	return ensureBaseArticles()
@@ -57,7 +68,7 @@ func ensureBaseArticles() error {
 	}
 
 	for _, article := range baseArticles {
-		filePath := filepath.Join(articlesDir, fmt.Sprintf("article%d.json", article.ID))
+		filePath := filepath.Join(getArticlesDir(), fmt.Sprintf("article%d.json", article.ID))
 		if _, err := os.Stat(filePath); os.IsNotExist(err) {
 			if err := saveArticle(article); err != nil {
 				return err
@@ -73,7 +84,7 @@ func parseTemplate(templateName string) (*template.Template, error) {
 }
 
 func articleFilePath(id int) string {
-	return filepath.Join(articlesDir, fmt.Sprintf("article%d.json", id))
+	return filepath.Join(getArticlesDir(), fmt.Sprintf("article%d.json", id))
 }
 
 func saveArticle(article model.Article) error {
@@ -89,7 +100,7 @@ func saveArticle(article model.Article) error {
 }
 
 func getArticlesList() []model.Article {
-	files, err := os.ReadDir(articlesDir)
+	files, err := os.ReadDir(getArticlesDir())
 	if err != nil {
 		return nil
 	}
@@ -101,7 +112,7 @@ func getArticlesList() []model.Article {
 			continue
 		}
 
-		data, err := os.ReadFile(filepath.Join(articlesDir, f.Name()))
+		data, err := os.ReadFile(filepath.Join(getArticlesDir(), f.Name()))
 		if err != nil {
 			continue
 		}
@@ -157,7 +168,7 @@ func safeUsernameFile(username string) string {
 	name = strings.ReplaceAll(name, " ", "_")
 	name = strings.ReplaceAll(name, "/", "_")
 	name = strings.ReplaceAll(name, "\\", "_")
-	return filepath.Join(usersDir, name+".json")
+	return filepath.Join(getUsersDir(), name+".json")
 }
 
 func saveUser(user model.User) error {
@@ -187,7 +198,7 @@ func getUserByUsername(username string) (*model.User, error) {
 }
 
 func getUserByVerifyToken(token string) (*model.User, error) {
-	files, err := os.ReadDir(usersDir)
+	files, err := os.ReadDir(getUsersDir())
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +208,7 @@ func getUserByVerifyToken(token string) (*model.User, error) {
 			continue
 		}
 
-		data, err := os.ReadFile(filepath.Join(usersDir, f.Name()))
+		data, err := os.ReadFile(filepath.Join(getUsersDir(), f.Name()))
 		if err != nil {
 			continue
 		}
@@ -221,7 +232,7 @@ func userExistsByUsername(username string) bool {
 }
 
 func userExistsByEmail(email string) bool {
-	files, err := os.ReadDir(usersDir)
+	files, err := os.ReadDir(getUsersDir())
 	if err != nil {
 		return false
 	}
@@ -231,7 +242,7 @@ func userExistsByEmail(email string) bool {
 			continue
 		}
 
-		data, err := os.ReadFile(filepath.Join(usersDir, f.Name()))
+		data, err := os.ReadFile(filepath.Join(getUsersDir(), f.Name()))
 		if err != nil {
 			continue
 		}

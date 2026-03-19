@@ -1,0 +1,37 @@
+
+services:
+  blog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: personal-blog
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      PORT: ${PORT:-8080}
+      ARTICLES_DIR: /app/articles
+      USERS_DIR: /app/users
+      AUTH_USER: ${AUTH_USER:-admin}
+      AUTH_PASS: ${AUTH_PASS:-password}
+    volumes:
+      - blog_articles:/app/articles
+      - blog_users:/app/users
+    restart: unless-stopped
+    networks:
+      - blog-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  blog_articles:
+  blog_users:
+
+networks:
+  blog-network:
+    driver: bridge

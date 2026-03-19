@@ -246,8 +246,8 @@ func AdminLoginHandler(w http.ResponseWriter, r *http.Request) {
 	username := strings.TrimSpace(r.FormValue("username"))
 	password := strings.TrimSpace(r.FormValue("password"))
 
-	adminUsername := os.Getenv("ADMIN_USERNAME")
-	adminPassword := os.Getenv("ADMIN_PASSWORD")
+	adminUsername := os.Getenv("AUTH_USER")
+	adminPassword := os.Getenv("AUTH_PASS")
 
 	if adminUsername == "" {
 		adminUsername = "admin"

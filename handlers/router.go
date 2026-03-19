@@ -2,6 +2,11 @@ package handlers
 
 import "net/http"
 
+func HealthHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte("OK"))
+}
+
 func RegisterRoutes() {
 	http.HandleFunc("/", HomeHandler)
 	http.HandleFunc("/articles", ArticlesHandler)
@@ -24,6 +29,8 @@ func RegisterRoutes() {
 	http.HandleFunc("/new", CreateArticleWithAuth())
 	http.HandleFunc("/edit", UpdateArticleWithAdminAuth())
 	http.HandleFunc("/delete", DeleteArticleWithAdminAuth())
+
+	http.HandleFunc("/health", HealthHandler)
 
 	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("images"))))
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("HTML"))))

@@ -10,7 +10,6 @@ import (
 )
 
 func init() {
-
 	err := godotenv.Load()
 	if err != nil {
 		fmt.Println("Warning: .env file not found")
@@ -19,18 +18,22 @@ func init() {
 	if err := api.EnsureStorage(); err != nil {
 		fmt.Println("Storage init error:", err)
 	}
-
 }
 
 func main() {
-
 	api.RegisterRoutes()
 
-	fmt.Println("Server started at http://localhost:8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
-	if err := api.StartServer(":8080"); err != nil {
+	addr := ":" + port
+
+	fmt.Printf("Server started at http://localhost:%s\n", port)
+
+	if err := api.StartServer(addr); err != nil {
 		fmt.Println("Server error:", err)
 		os.Exit(1)
 	}
-
 }
