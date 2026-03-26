@@ -1,16 +1,13 @@
-# Stage 1: Builder
-FROM golang:1.25.1 AS builder
+FROM golang:1.23-alpine AS builder
 
-WORKDIR /app
+WORKDIR /build
 
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o blog-app .
-
-# Stage 2: Runtime
+RUN CGO_ENABLED=0 GOOS=linux go build -o /blog-app main.go
 FROM alpine:3.20
 
 WORKDIR /app
@@ -18,21 +15,28 @@ WORKDIR /app
 RUN apk add --no-cache ca-certificates wget && \
     addgroup -S appgroup && adduser -S appuser -G appgroup
 
-COPY --from=builder /app/blog-app /app/blog-app
-COPY --from=builder /app/HTML /app/HTML
-COPY --from=builder /app/images /app/images
+COPY --from=builder /blog-app /app/blog-app
+
+COPY --from=builder /build/HTML /app/HTML
+COPY --from=builder /build/images /app/images
 
 RUN mkdir -p /app/articles /app/users && \
     chown -R appuser:appgroup /app
 
 ENV PORT=8080
 ENV ARTICLES_DIR=/app/articles
+
+
+
 ENV USERS_DIR=/app/users
-ENV AUTH_USER=admin
-ENV AUTH_PASS=password
+
 
 EXPOSE 8080
-
 USER appuser
 
+LABEL org.opencontainers.image.source=https://github.com
+LABEL org.opencontainers.image.description="Web-Blog service built with Go and Docker."
+
 CMD ["/app/blog-app"]
+
+

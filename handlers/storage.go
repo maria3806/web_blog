@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-	"text/template"
 	"time"
 
 	"blog/model"
@@ -77,10 +76,6 @@ func ensureBaseArticles() error {
 	}
 
 	return nil
-}
-
-func parseTemplate(templateName string) (*template.Template, error) {
-	return template.ParseFiles(filepath.Join("HTML", templateName))
 }
 
 func articleFilePath(id int) string {

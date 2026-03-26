@@ -95,52 +95,48 @@
     </div>
 </div>
 
+
 <script>
     const canvas = document.getElementById('rainCanvas');
     const ctx = canvas.getContext('2d');
     let width, height, particles;
-
     function init() {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
         particles = [];
         for (let i = 0; i < 100; i++) {
-            particles.push({
-                x: Math.random() * width * 1.5 - (width * 0.5),
-                y: Math.random() * height,
-                l: Math.random() * 15 + 5,
-                v: Math.random() * 12 + 8,
-                a: 0.2
-            });
+            particles.push({ x: Math.random() * width * 1.5 - (width * 0.5), y: Math.random() * height, l: Math.random() * 15 + 5, v: Math.random() * 12 + 8, a: 0.2 });
         }
     }
-
     function draw() {
         ctx.clearRect(0, 0, width, height);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-        ctx.lineWidth = 1;
-
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1;
         particles.forEach(p => {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p.x + p.l * Math.sin(p.a), p.y + p.l * Math.cos(p.a));
-            ctx.stroke();
-
-            p.x += p.v * Math.sin(p.a);
-            p.y += p.v * Math.cos(p.a);
-
-            if (p.y > height) {
-                p.y = -20;
-                p.x = Math.random() * width * 1.5 - (width * 0.5);
-            }
+            ctx.beginPath(); ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p.x + p.l * Math.sin(p.a), p.y + p.l * Math.cos(p.a)); ctx.stroke();
+            p.x += p.v * Math.sin(p.a); p.y += p.v * Math.cos(p.a);
+            if (p.y > height) { p.y = -20; p.x = Math.random() * width * 1.5 - (width * 0.5); }
         });
-
         requestAnimationFrame(draw);
     }
-
     window.addEventListener('resize', init);
-    init();
-    draw();
+    init(); draw();
+
+    const cards = document.querySelectorAll('.auth-card:not(.logged-card)');
+    
+    cards.forEach(card => {
+        let timer = null;
+
+        card.addEventListener('mouseenter', () => {
+            if (timer) clearTimeout(timer);
+            card.classList.add('expanded');
+
+            timer = setTimeout(() => {
+                card.classList.remove('expanded');
+                timer = null;
+            }, 8000);
+        });
+    });
 </script>
 
 </body>
